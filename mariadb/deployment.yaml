@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-instance
+spec:
+  selector:
+    matchLabels:
+      app: mariadb-instance
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mariadb-instance
+    spec:
+      containers:
+      - name: mariadb
+        image: mariadb:latest
+        imagePullPolicy: "Always"
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: maria123
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mariadb-storage
+      volumes:
+      - name: mariadb-storage
+        emptyDir: {}
