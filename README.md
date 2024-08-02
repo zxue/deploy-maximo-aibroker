@@ -155,7 +155,7 @@ FAILED - RETRYING: [localhost]: wait_for_crd : Wait until the servicemeshcontrol
 
 You can delete the "openshift-pipelines-operator-rh" operator.
 
-![Delete rh operator](openshift-pipelines-operator-rh.png)
+![Delete rh operator](media/openshift-pipelines-operator-rh.png)
 
 ## Acknowledgement
 
