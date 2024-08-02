@@ -48,7 +48,7 @@ oc apply -f mariadb/deployment.yaml -n mas-inst1-aibroker
 oc apply -f mariadb/service.yaml -n mas-inst1-aibroker
 ```
 
-Note that the database is created in a specific namespace based on the instance name for Mas Core. For example, if MAS instance is "inst1", then the namespace is "mas-inst1-aibroker".
+Note that the database is created in a specific namespace based on the instance name for Mas Core, `mas-{{ mas_instance_id }}-aibroker`. For example, if MAS instance is "inst1", then the namespace is "mas-inst1-aibroker".
 
 To create a secret for the MariaDB database, import the yaml file below from the OpenShift console. Alternatively, create a yaml file and apply it.
 
