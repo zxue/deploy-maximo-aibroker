@@ -157,6 +157,21 @@ You can delete the "openshift-pipelines-operator-rh" operator.
 
 ![Delete rh operator](media/openshift-pipelines-operator-rh.png)
 
+### DSCInitialization error
+
+The task `Create DSCInitialization instance` may fail due to internal server error.
+
+```
+TASK [ibm.mas_devops.odh : Create DSCInitialization instance] ******************************************************************************************************
+fatal: [localhost]: FAILED! => changed=false 
+  error: 500
+  msg: 'DSCInitialization default-dsci: Failed to apply object: b''{"kind":"Status","apiVersion":"v1","metadata":{},"status":"Failure","message":"Internal error occurred: failed calling webhook \\"operator.opendatahub.io\\": failed to call webhook: Post \\"https://opendatahub-operator-controller-manager-service.openshift-operators.svc:443/validate-opendatahub-io-v1?timeout=10s\\": dial tcp 10.131.0.30:9443: connect: connection refused","reason":"InternalError","details":{"causes":[{"message":"failed calling webhook \\"operator.opendatahub.io\\": failed to call webhook: Post \\"https://opendatahub-operator-controller-manager-service.openshift-operators.svc:443/validate-opendatahub-io-v1?timeout=10s\\": dial tcp 10.131.0.30:9443: connect: connection refused"}]},"code":500}\n'''
+  reason: Internal Server Error
+  status: 500
+```
+
+
+
 ## Acknowledgement
 
-Many thanks to the product group, Kewei Yang, Eyal Cohen,Rafael Felipe Craveiro Teixeira, for sharing their knowledge and providing troubleshooting tips.
+Many thanks to the product group, Kewei Yang, Eyal Cohen,Rafael Felipe Craveiro Teixeira, for sharing their knowledge and providing troubleshooting tips. Also, thanks to Janki Vora and Veera Solasa for their collaboration and feedback.
