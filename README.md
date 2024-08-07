@@ -182,4 +182,4 @@ type: kubernetes.io/tls
 
 ## Acknowledgement
 
-Many thanks to the product group, Kewei Yang, Eyal Cohen,Rafael Felipe Craveiro Teixeira, for sharing their knowledge and providing troubleshooting tips. Also, thanks to Janki Vora and Veera Solasa for their collaboration and feedback.
+Many thanks to the product group, Kewei Yang, Eyal Cohen, Rafael Felipe Craveiro Teixeira and Roshi Dubey for sharing their knowledge and troubleshooting tips. Also, thanks to Janki Vora and Veera Solasa for their collaboration and feedback.
