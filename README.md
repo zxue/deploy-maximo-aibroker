@@ -102,6 +102,8 @@ Run the command line to install Maximo AI broker
 ansible-playbook playbooks/oneclick_add_aibroker.yml
 ```
 
+You can see the screen [output](docs/masaibroker_output.txt) from the ai broker deloyment. 
+
 ## Troubleshoot issues
 
 ### Role `ibm.mas_devops.odh` is not found
@@ -169,7 +171,7 @@ When custom certificates are used for MAS, it is likely that manual certificate 
 ```
 kind: Secret
 apiVersion: v1
-metadata:
+<!-- metadata: -->
   name: inst1-public-aibroker-tls
   namespace: mas-inst1-aibroker
 ...
