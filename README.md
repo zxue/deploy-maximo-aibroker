@@ -39,74 +39,59 @@ You can find the url from the networking routes, e.g. `https://minio-route-minio
 
 ## Create MariaDB and secret
 
-MariaDB is required for AI Broker. Ensure that you have downloaded the two yaml files, `deployment.yml' and `service.yml`, and save them to the mariadb folder. Navigate to the parent folder and run the command lines below to MariaDB database.
+MariaDB is required for AI Broker. Ensure that you have downloaded the yaml files in the repo, and save them to the mariadb folder. 
+
+Open the mariadb network policy file, mariadb-np.yml, and update two values with the correct namespace, e.g. "kubernetes.io/metadata.name: mas-inst1-aibroker".
+
+Navigate to the parent folder and run the command lines below to create a MariaDB database in its own namespace, `mariadb`.
+
 
 ```
-oc new-project mas-inst1-aibroker
+# oc new-project mas-inst1-aibroker
 cd ..
-oc apply -f mariadb/deployment.yaml -n mas-inst1-aibroker
-oc apply -f mariadb/service.yaml -n mas-inst1-aibroker
-```
-
-Note that the database is created in a specific namespace based on the instance name for Mas Core, `mas-{{ mas_instance_id }}-aibroker`. For example, if MAS instance is "inst1", then the namespace is "mas-inst1-aibroker".
-
-To create a secret for the MariaDB database, import the yaml file below from the OpenShift console. Alternatively, create a yaml file and apply it.
-
-```
-apiVersion: v1
-kind: Secret
-metadata:
-  name: ds-pipeline-db-instance
-  namespace: mas-inst1-aibroker
-type: Opaque
-stringData:
-  password: maria123
+./mariadb/mariadb-deploy.sh
 ```
 
 ## Define environment variables
 
-Depending on where you pull the container images, you will need define the following environment variables.
+Depending on where you pull the container images, you will need define the following environment variables. Note that dev images are used currently so use the provided ARTIFACTORY credentials. 
 
 ```
 # ARTIFACTORY credentials
-export ARTIFACTORY_USERNAME="xxx.com"
-export ARTIFACTORY_TOKEN="xxx"
+export ARTIFACTORY_USERNAME="pmqcloud@us.ibm.com"
+export ARTIFACTORY_TOKEN="cmVmdGtuOjAxOjE3MjQyNTg5ODg6UFI0UG5WQlJSS01NV3BVN0tvMFNYUkRkYkJW"
+export MAS_ICR_CP="docker-na-public.artifactory.swg-devops.com/wiotp-docker-local"
+export MAS_ICR_CPOPEN="docker-na-public.artifactory.swg-devops.com/wiotp-docker-local/cpopen"
 
-# IBM entitlement keys
-export MAS_INSTANCE_ID="inst1" 
+#MAS
+export MAS_INSTANCE_ID="inst1"
+export MAS_ENTITLEMENT_USERNAME="xxx@ibm.com"
 export MAS_ENTITLEMENT_KEY="xxx"
-export IBM_ENTITLEMENT_USERNAME="xxx.com" 
-export IBM_ENTITLEMENT_KEY="xxx"
-export ICR_USERNAME="cp" 
-export ICR_PASSWORD="<same as entitlement key>" 
-export APP_DOMAIN="apps.xxx.com" 
 
-#Storage info for Minio
+# MINIO
 export STORAGE_ACCESSKEY="minio123"
 export STORAGE_SECRETKEY="minio123"
-export STORAGE_HOST="http://minio-service.minio.svc.cluster.local"
-export STORAGE_PORT="9000"
-export STORAGE_REGION=""
-export STORAGE_PROVIDER="minio"
 export STORAGE_SSL="false"
+export STORAGE_PROVIDER="minio"
+export STORAGE_PORT="9000"
+export STORAGE_HOST="minio-service.minio.svc.cluster.local"
 export STORAGE_PIPELINES_BUCKET="km-pipelines"
 export STORAGE_TENANTS_BUCKET="km-tenants"
 export STORAGE_TEMPLATES_BUCKET="km-templates"
-export TENANT_NAME="user"
 
-# watsonx credentails
-
+# WATSONX AI
 export WATSONXAI_APIKEY="xxx"
 export WATSONXAI_URL="https://us-south.ml.cloud.ibm.com"
 export WATSONXAI_PROJECT_ID="xxx"
+export MAS_AIBROKER_CHANNEL="9.0.x"
 
-# MariaDB info
-export DB_HOST="mariadb-instance.mas-inst1-aibroker.svc.cluster.local"
+# database
+export DB_HOST="mariadb-instance.mariadb.svc.cluster.local"
 export DB_PORT="3306"
-export DB_USER="root"
-export DB_DATABASE="mlpipelines"
+export DB_USER="mariadb"
+export DB_DATABASE="kmpipeline"
 export DB_SECRET_NAME="ds-pipeline-db-instance"
-export DB_SECRET_VALUE="maria123"
+export DB_SECRET_VALUE="mariadb"
 ```
 
 ## Install AI broker
@@ -170,7 +155,30 @@ fatal: [localhost]: FAILED! => changed=false
   status: 500
 ```
 
+Re-run the ai broker playbooks. If that does not help, check that you have configured Minio storage and MariaDB properly.
 
+### Manual certificate management issue 
+
+You may get an error like, 
+```
+Manual certificate management is enabled and the required TLS secret `inst1-public-aibroker-tls` has not been created in namespace ''mas-inst1-aibroker'''
+```
+
+When custom certificates are used for MAS, it is likely that manual certificate management is set to true in OpenShift. To resolve the issue, create a secret for `inst1-public-aibroker-tls` in OpenShift. You can check what certificates are used from the MAS admin portal, and copy the data and type values. Re-run the ai broker playbooks.
+
+```
+kind: Secret
+apiVersion: v1
+metadata:
+  name: inst1-public-aibroker-tls
+  namespace: mas-inst1-aibroker
+...
+data:
+  ca.crt: xxx
+  tls.crt: xxx
+  tls.key: xxx
+type: kubernetes.io/tls
+```
 
 ## Acknowledgement
 
