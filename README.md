@@ -280,7 +280,14 @@ fatal: [localhost]: FAILED! => changed=false
   status: 500
 ```
 
-Re-run the ai broker playbooks. If that does not help, check that you have configured Minio storage and MariaDB properly.
+### Pods with "CrashLoopBackOff" errors
+
+If ds-pipeline-instance and/or ds-pipeline-persistenceagent-instance pods keep crashing with "CrashLoopBackOff" errors, check the following.
+
+- mariadb instance is working properly
+- data science cluster in the open data hub operator is running properly
+
+Address any issues you find, and re-run the ai broker playbooks. 
 
 ### Manual certificate management issue 
 
