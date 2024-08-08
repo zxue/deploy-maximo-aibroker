@@ -104,6 +104,125 @@ ansible-playbook playbooks/oneclick_add_aibroker.yml
 
 You can see the screen [output](docs/masaibroker_output.txt) from the ai broker deloyment. 
 
+## Testing AI broker
+
+After AI broker deployment, check to ensure all pods are running or completed without errors in the "mas-<instance>-aibroker" namespace.
+
+You can test the AI broker service using tools like the terminal session, Visual Studio Code with Rest Client or Postman.
+
+### Run the curl command lines
+
+Before running the test, obtain the following information and replace them in the curl command lines.
+
+- ai broker url. It's available from networking routes in the "mas-<instance name>-aibroker" namespace.
+- api key. It is available from the secret of "aibroker-user----apikey-secret" in the "mas-<instance name>-aibroker" namespace.
+- The [working.zip](docs/working.zip) file from the repo. 
+
+```
+curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d17027e.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/uploadfile?filename=working.zip' \
+--header 'apikey: K5gxxjkXN18oOOuVkqQiWH6fxNknMvEH' \
+--header 'tenantid: aibroker-user' \
+--header 'modelid;' \
+--header 'Content-Type: application/zip' \
+--header 'Cookie: 4c47ff0e86b47bc367679e589d646347=76943252df0d580a4cd4a8651a70c823; JSESSIONID=0000q8h9d2eUFqD7xWt1gR8eheF:860d418d-de7d-43b4-83c4-69a3e605bc61' \
+--data-binary '@/Users/xxx/Downloads/working.zip'
+
+curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d17027e.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/model' \
+--header 'apikey: K5gxxjkXN18oOOuVkqQiWH6fxNknMvEH' \
+--header 'tenantid: aibroker-user' \
+--header 'dataid: working.zip' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: 4c47ff0e86b47bc367679e589d646347=76943252df0d580a4cd4a8651a70c823; JSESSIONID=0000NXBS_3cnUJ8PQMBL7iom6Nw:860d418d-de7d-43b4-83c4-69a3e605bc61' \
+--data-raw '{
+  "arguments": {
+
+      "keyname":"workorderid",
+      
+      "score_threshold":0.1,
+      "target":"problemcode",
+      "target_description":"problemcode_description"
+  },
+
+  "template":{
+       "id":"pcc",
+       "templateversion":"1.0.0.test"
+     }
+  
+}'
+```
+
+If no errors occurred, you can check the pipeline runs in OpenShift.
+
+![AI broker pipelineruns](media/aibroker-pipelineruns.png)
+
+You can open the url from Serverless | serving in the aibroker-user namespace, and see the msg, `{"status":"alive"}`.
+
+![AI broker user serving](media/aibroker-user-serving.png)
+
+In VS Code with Rest Client extension, create a file named [aibroker test.http](docs/aibroker%20test.http). You will need the following data.
+
+```
+### REST Client
+@aibrokerurl =https://aibroker.inst1.apps.66b191009a14d0001e972c56.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/model/mc4210860/infer/predict
+@tenantid =aibroker-user
+@apikey =sCRr4873RdNr0gXoaH4AZz60IcXJeYqV
+
+POST {{aibrokerurl}}
+apikey: sCRr4873RdNr0gXoaH4AZz60IcXJeYqV
+tenantid: aibroker-user
+Content-Type: application/json
+
+{
+    "instances": [
+        {
+            "description": "Engine start problem",
+            "workorderid": 133438
+        }  
+    ]
+}
+```
+
+Here is the response you may get.
+
+```
+HTTP/1.1 200 OK
+content-type: application/json
+x-content-type-options: nosniff
+x-xss-protection: 0
+cache-control: no-cache, no-store, max-age=0, must-revalidate
+pragma: no-cache
+expires: 0
+strict-transport-security: max-age=31536000 ; includeSubDomains
+x-frame-options: DENY
+content-language: en-US
+set-cookie: JSESSIONID=0000U5PfmA2aqlxc5NcfIXEStIo:9342ed1c-9ed0-41f5-b3ba-6014f8d2adb5; Path=/; HttpOnly
+transfer-encoding: chunked
+date: Thu, 08 Aug 2024 16:20:45 GMT
+connection: close
+
+{
+  "predictions": [
+    [
+      {
+        "confidence": 48,
+        "value": "PDE",
+        "recommended": false
+      },
+      {
+        "confidence": 43,
+        "value": "PTF",
+        "recommended": false
+      },
+      {
+        "confidence": 43,
+        "value": "STD",
+        "recommended": false
+      }
+    ]
+  ]
+}
+```
+
 ## Troubleshoot issues
 
 ### Role `ibm.mas_devops.odh` is not found

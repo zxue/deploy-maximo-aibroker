@@ -1,0 +1,20 @@
+
+
+### REST Client
+@aibrokerurl =https://aibroker.inst1.apps.66b191009a14d0001e972c56.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/model/mc4210860/infer/predict
+@tenantid =aibroker-user
+@apikey =sCRr4873RdNr0gXoaH4AZz60IcXJeYqV
+
+POST {{aibrokerurl}}
+apikey: {{apikey}}
+tenantid: {{tenantid}}
+Content-Type: application/json
+
+{
+    "instances": [
+        {
+            "description": "Engine start problem",
+            "workorderid": 133438
+        }  
+    ]
+}
