@@ -116,8 +116,8 @@ You can test the AI broker service using tools like the terminal session, Visual
 
 Before running the test, obtain the following information and replace them in the curl command lines.
 
-- ai broker url. It's available from networking routes in the "mas-<instance name>-aibroker" namespace.
-- api key. It is available from the secret of "aibroker-user----apikey-secret" in the "mas-<instance name>-aibroker" namespace.
+- ai broker url. It's available from networking routes in the `mas-<instance name>-aibroker` namespace.
+- api key. It is available from the secret of `aibroker-user----apikey-secret` in the `mas-<instance name>-aibroker` namespace.
 - The [working.zip](docs/working.zip) file from the repo. 
 
 ```
