@@ -159,7 +159,9 @@ You can open the url from Serverless | serving in the aibroker-user namespace, a
 
 ![AI broker user serving](media/aibroker-user-serving.png)
 
-In VS Code with Rest Client extension, create a file named [aibroker test.http](docs/aibroker%20test.http). You will need the following data.
+### Test inference using VS Code
+
+In VS Code with Rest Client extension, create a file named [aibroker test.http](docs/aibroker%20test.http). You will need the following data. You can do similar test in Postman.
 
 ```
 ### REST Client
