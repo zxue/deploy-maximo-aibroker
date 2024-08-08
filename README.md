@@ -284,6 +284,8 @@ fatal: [localhost]: FAILED! => changed=false
 
 If ds-pipeline-instance and/or ds-pipeline-persistenceagent-instance pods keep crashing with "CrashLoopBackOff" errors, check the following.
 
+![data science cluster pods error](media/datasciencecluster-errors.png)
+
 - mariadb instance is working properly
 - data science cluster in the open data hub operator is running properly
 
