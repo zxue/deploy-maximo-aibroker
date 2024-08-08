@@ -21,6 +21,8 @@ cd masconfig
 docker run -it --rm --pull always -v ${PWD}:/masconfig --name ibmmas quay.io/ibmmas/cli
 ```
 
+Clone the repo because you will need several files for the deployment.
+
 ## Create Minio storage
 
 While you may be able to use IBM Cloud Object Storage and other S3 compatible storage systems, keep in mind that only two storage options, Minio or AWS S3 storage, have been tested at the time of this writing. Check more details on [how to install minio](https://min.io/docs/minio/kubernetes/openshift/operations/installation.html)
