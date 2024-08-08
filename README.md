@@ -287,7 +287,7 @@ If ds-pipeline-instance and/or ds-pipeline-persistenceagent-instance pods keep c
 ![data science cluster pods error](media/datasciencecluster-errors.png)
 
 - mariadb instance is working properly
-- data science cluster in the open data hub operator is running properly
+- data science cluster, including DSC initialization and Feature Tracker, in the open data hub operator is running properly
 
 Address any issues you find, and re-run the ai broker playbooks. 
 
