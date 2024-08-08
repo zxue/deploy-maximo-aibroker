@@ -152,6 +152,9 @@ curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d1702
   
 }'
 ```
+If the curl command lines failed due to SSL certificate problem, you can import to Postman and run there.
+
+![Run curl in Postman](media/run-curl-in-postman.png)
 
 If no errors occurred, you can check the pipeline runs in OpenShift.
 
@@ -172,8 +175,8 @@ In VS Code with Rest Client extension, create a file named [aibroker test.http](
 @apikey =sCRr4873RdNr0gXoaH4AZz60IcXJeYqV
 
 POST {{aibrokerurl}}
-apikey: sCRr4873RdNr0gXoaH4AZz60IcXJeYqV
-tenantid: aibroker-user
+apikey: {{apikey}}
+tenantid: {{tenantid}}
 Content-Type: application/json
 
 {
