@@ -152,7 +152,7 @@ curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d1702
   
 }'
 ```
-If the curl command lines failed due to SSL certificate problem, add -k or --insecure to allow insecure server connections when using SSL. 
+If the curl command lines failed due to SSL certificate problem, add -k or --insecure to allow insecure server connections. 
 
 You can import to Postman and run there.
 
