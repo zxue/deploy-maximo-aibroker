@@ -120,6 +120,7 @@ Before running the test, obtain the following information and replace them in th
 - api key. It is available from the secret of `aibroker-user----apikey-secret` in the `mas-<instance name>-aibroker` namespace.
 - The [working.zip](docs/working.zip) file from the repo. 
 
+Send over the working.zip file
 ```
 curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d17027e.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/uploadfile?filename=working.zip' \
 --header 'apikey: K5gxxjkXN18oOOuVkqQiWH6fxNknMvEH' \
@@ -128,7 +129,10 @@ curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d1702
 --header 'Content-Type: application/zip' \
 --header 'Cookie: 4c47ff0e86b47bc367679e589d646347=76943252df0d580a4cd4a8651a70c823; JSESSIONID=0000q8h9d2eUFqD7xWt1gR8eheF:860d418d-de7d-43b4-83c4-69a3e605bc61' \
 --data-binary '@/Users/xxx/Downloads/working.zip'
+```
 
+Get the model id
+```
 curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d17027e.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/model' \
 --header 'apikey: K5gxxjkXN18oOOuVkqQiWH6fxNknMvEH' \
 --header 'tenantid: aibroker-user' \
@@ -139,19 +143,17 @@ curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d1702
   "arguments": {
 
       "keyname":"workorderid",
-      
       "score_threshold":0.1,
       "target":"problemcode",
       "target_description":"problemcode_description"
   },
-
   "template":{
        "id":"pcc",
        "templateversion":"1.0.0.test"
      }
-  
 }'
 ```
+
 If the curl command lines failed due to SSL certificate problem, add -k or --insecure to allow insecure server connections. 
 
 You can import to Postman and run there.
@@ -168,13 +170,14 @@ You can open the url from Serverless | serving in the aibroker-user namespace, a
 
 ### Test inference using VS Code
 
-In VS Code with Rest Client extension, create a file named [aibroker test.http](docs/aibroker%20test.http). You will need the following data. You can do similar test in Postman.
+In VS Code with Rest Client extension, create a file named [aibroker test.http](docs/aibroker%20test.http). Replace the variables with values you find previously, including the model id from the second curl command line. Note: You can do similar test in Postman.
 
 ```
 ### REST Client
-@aibrokerurl =https://aibroker.inst1.apps.66b191009a14d0001e972c56.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/model/mc4210860/infer/predict
+@aibrokerurl =https://aibroker.inst1.apps.66b191009a14d0001e972c56.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/model/{{modelid}}/infer/predict
 @tenantid =aibroker-user
 @apikey =sCRr4873RdNr0gXoaH4AZz60IcXJeYqV
+@modelid=mc4210860
 
 POST {{aibrokerurl}}
 apikey: {{apikey}}
