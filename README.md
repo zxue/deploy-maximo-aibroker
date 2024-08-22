@@ -67,7 +67,7 @@ export MAS_ICR_CPOPEN="docker-na-public.artifactory.swg-devops.com/wiotp-docker-
 
 #MAS
 export MAS_INSTANCE_ID="inst1"
-export MAS_ENTITLEMENT_USERNAME="xxx@ibm.com"
+export MAS_ENTITLEMENT_USERNAME="xxx"
 export MAS_ENTITLEMENT_KEY="xxx"
 
 # MINIO
