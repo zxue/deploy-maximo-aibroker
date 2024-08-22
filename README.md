@@ -27,11 +27,11 @@ Clone the repo because you will need several files for the deployment.
 
 While you may be able to use IBM Cloud Object Storage and other S3 compatible storage systems, keep in mind that only two storage options, Minio or AWS S3 storage, have been tested at the time of this writing. Check more details on [how to install minio](https://min.io/docs/minio/kubernetes/openshift/operations/installation.html)
 
-Ensure that you have downloaded the three yaml files, `kustomization.yml',`minio.yml`,`pvc.yml`, and save them to the minio folder. Navigate to the parent folder and run the command lines below to create the Minio storage. 
+Ensure that you have downloaded the three yaml files, `kustomization.yml`,`minio.yml`,`pvc.yml`, and save them to the minio folder. Navigate to the parent folder and run the command lines below to create the Minio storage in its own namespace, `minio`, which is created automatically. 
 
 ```
-oc new-project minio
-cd ..
+#oc new-project minio
+#cd ..
 oc apply -k minio
 ```
 
@@ -45,12 +45,12 @@ MariaDB is required for AI Broker. Ensure that you have downloaded the yaml file
 
 Open the mariadb network policy file, mariadb-np.yml, and update two values with the correct namespace, e.g. "kubernetes.io/metadata.name: mas-inst1-aibroker".
 
-Navigate to the parent folder and run the command lines below to create a MariaDB database in its own namespace, `mariadb`.
+Navigate to the parent folder and run the command lines below to create a MariaDB database in its own namespace, `mariadb`, which is created automatically.
 
 
 ```
 # oc new-project mas-inst1-aibroker
-cd ..
+#cd ..
 ./mariadb/mariadb-deploy.sh
 ```
 
