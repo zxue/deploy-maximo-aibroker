@@ -123,7 +123,7 @@ Before running the test, obtain the following information and replace them in th
 Send over the working.zip file
 ```
 curl --location --request POST 'https://aibroker.inst1.apps.xxx.com/ibm/aibroker/service/rest/api/v1/uploadfile?filename=working.zip' \
---header 'apikey: K5gxxjkXN18oOOuVkqQiWH6fxNknMvEH' \
+--header 'apikey: xxx' \
 --header 'tenantid: aibroker-user' \
 --header 'modelid;' \
 --header 'Content-Type: application/zip' \
@@ -134,7 +134,7 @@ curl --location --request POST 'https://aibroker.inst1.apps.xxx.com/ibm/aibroker
 Get the model id
 ```
 curl --location --request POST 'https://aibroker.inst1.apps.xxx.com
---header 'apikey: K5gxxjkXN18oOOuVkqQiWH6fxNknMvEH' \
+--header 'apikey: xxx' \
 --header 'tenantid: aibroker-user' \
 --header 'dataid: working.zip' \
 --header 'Content-Type: application/json' \
