@@ -60,8 +60,8 @@ Depending on where you pull the container images, you will need define the follo
 
 ```
 # ARTIFACTORY credentials
-export ARTIFACTORY_USERNAME="pmqcloud@us.ibm.com"
-export ARTIFACTORY_TOKEN="cmVmdGtuOjAxOjE3MjQyNTg5ODg6UFI0UG5WQlJSS01NV3BVN0tvMFNYUkRkYkJW"
+export ARTIFACTORY_USERNAME="xxx"
+export ARTIFACTORY_TOKEN="xxx"
 export MAS_ICR_CP="docker-na-public.artifactory.swg-devops.com/wiotp-docker-local"
 export MAS_ICR_CPOPEN="docker-na-public.artifactory.swg-devops.com/wiotp-docker-local/cpopen"
 
@@ -122,7 +122,7 @@ Before running the test, obtain the following information and replace them in th
 
 Send over the working.zip file
 ```
-curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d17027e.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/uploadfile?filename=working.zip' \
+curl --location --request POST 'https://aibroker.inst1.apps.xxx.com/ibm/aibroker/service/rest/api/v1/uploadfile?filename=working.zip' \
 --header 'apikey: K5gxxjkXN18oOOuVkqQiWH6fxNknMvEH' \
 --header 'tenantid: aibroker-user' \
 --header 'modelid;' \
@@ -133,7 +133,7 @@ curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d1702
 
 Get the model id
 ```
-curl --location --request POST 'https://aibroker.inst1.apps.b3f42fba4a0c001d17027e.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/model' \
+curl --location --request POST 'https://aibroker.inst1.apps.xxx.com
 --header 'apikey: K5gxxjkXN18oOOuVkqQiWH6fxNknMvEH' \
 --header 'tenantid: aibroker-user' \
 --header 'dataid: working.zip' \
@@ -174,7 +174,7 @@ In VS Code with Rest Client extension, create a file named [aibroker test.http](
 
 ```
 ### REST Client
-@aibrokerurl =https://aibroker.inst1.apps.66b191009a14d0001e972c56.ocp.techzone.ibm.com/ibm/aibroker/service/rest/api/v1/model/{{modelid}}/infer/predict
+@aibrokerurl =https://aibroker.inst1.apps.xxx.com/ibm/aibroker/service/rest/api/v1/model/{{modelid}}/infer/predict
 @tenantid =aibroker-user
 @apikey =sCRr4873RdNr0gXoaH4AZz60IcXJeYqV
 @modelid=mc4210860
