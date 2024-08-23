@@ -235,6 +235,10 @@ connection: close
 }
 ```
 
+## Delete MAS AI Broker
+
+To delete MAS AI Broker, the easiest way is to delete its namespace and the `aibroker-user` namespace. You may also delete the Minio storage and MariaDB database. Unlike other MAS app deployment, no custom resources for AI Broker deployment are created so no additional cleanup is necessary.
+
 ## Troubleshoot issues
 
 ### Role `ibm.mas_devops.odh` is not found
@@ -306,7 +310,7 @@ You may get an error like,
 Manual certificate management is enabled and the required TLS secret `inst1-public-aibroker-tls` has not been created in namespace ''mas-inst1-aibroker'''
 ```
 
-When custom certificates are used for MAS, it is likely that manual certificate management is set to true in OpenShift. To resolve the issue, create a secret for `inst1-public-aibroker-tls` in OpenShift. You can check what certificates are used from the MAS admin portal, and copy the data and type values. Re-run the ai broker playbooks.
+When custom certificates are used for MAS, it is likely that manual certificate management is set to true in OpenShift. To resolve the issue, create a secret for `inst1-public-aibroker-tls` in OpenShift by copying the certificates and keys in the MAS Core namespace. You can also check what certificates are used from the MAS admin portal, and create it there. Re-run the ai broker playbooks.
 
 ```
 kind: Secret
