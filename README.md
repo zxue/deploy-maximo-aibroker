@@ -101,7 +101,9 @@ export MAS_AIBROKER_DB_SECRET_VALUE="mariadb"
 Run the command line to install Maximo AI broker
 
 ```
-ansible-playbook playbooks/oneclick_add_aibroker.yml
+#ansible-playbook playbooks/oneclick_add_aibroker.yml
+
+ansible-playbook ibm.mas_devops.oneclick_add_aibroker
 ```
 
 You can see the screen [output](docs/masaibroker_output.txt) from the ai broker deloyment. 
@@ -240,6 +242,29 @@ connection: close
 To delete MAS AI Broker, the easiest way is to delete its namespace and the `aibroker-user` namespace. You may also delete the Minio storage and MariaDB database. Unlike other MAS app deployment, no custom resources for AI Broker deployment are created so no additional cleanup is necessary.
 
 ## Troubleshoot issues
+
+### MariaDB pod shows pending status
+
+The issue may be related to PVC. The storage class, `ocs-storagecluster-cephfs` is used in the `mariadb-pvc.yml` file. Change it to the storage class, e.g. "ibmc-block-gold".
+
+```
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb-pvc
+  namespace: mariadb
+  labels:
+    app: mariadb-instance
+    component: data-science-pipelines
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ibmc-block-gold
+  resources:
+    requests:
+      storage: 20Gi
+```
 
 ### Role `ibm.mas_devops.odh` is not found
 
