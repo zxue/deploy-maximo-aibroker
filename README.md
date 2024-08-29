@@ -58,6 +58,9 @@ Navigate to the parent folder and run the command lines below to create a MariaD
 
 Depending on where you pull the container images, you will need define the following environment variables. Note that dev images are used currently so use the provided ARTIFACTORY credentials. 
 
+> [!NOTE]  
+> Make sure that you use the correct instance id. It should match the one for MAS Core.
+
 ```
 # ARTIFACTORY credentials
 export ARTIFACTORY_USERNAME="xxx"
