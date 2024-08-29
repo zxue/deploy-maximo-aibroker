@@ -71,29 +71,29 @@ export MAS_ENTITLEMENT_USERNAME="xxx"
 export MAS_ENTITLEMENT_KEY="xxx"
 
 # MINIO
-export STORAGE_ACCESSKEY="minio123"
-export STORAGE_SECRETKEY="minio123"
-export STORAGE_SSL="false"
-export STORAGE_PROVIDER="minio"
-export STORAGE_PORT="9000"
-export STORAGE_HOST="minio-service.minio.svc.cluster.local"
-export STORAGE_PIPELINES_BUCKET="km-pipelines"
-export STORAGE_TENANTS_BUCKET="km-tenants"
-export STORAGE_TEMPLATES_BUCKET="km-templates"
+export MAS_AIBROKER_STORAGE_ACCESSKEY="minio123"
+export MAS_AIBROKER_STORAGE_SECRETKEY="minio123"
+export MAS_AIBROKER_STORAGE_SSL="false"
+export MAS_AIBROKER_STORAGE_PROVIDER="minio"
+export MAS_AIBROKER_STORAGE_PORT="9000"
+export MAS_AIBROKER_STORAGE_HOST="minio-service.minio.svc.cluster.local"
+export MAS_AIBROKER_STORAGE_PIPELINES_BUCKET="km-pipelines"
+export MAS_AIBROKER_STORAGE_TENANTS_BUCKET="km-tenants"
+export MAS_AIBROKER_STORAGE_TEMPLATES_BUCKET="km-templates"
 
 # WATSONX AI
-export WATSONXAI_APIKEY="xxx"
-export WATSONXAI_URL="https://us-south.ml.cloud.ibm.com"
-export WATSONXAI_PROJECT_ID="xxx"
+export MAS_AIBROKER_WATSONXAI_APIKEY="xxx"
+export MAS_AIBROKER_WATSONXAI_URL="https://us-south.ml.cloud.ibm.com"
+export MAS_AIBROKER_WATSONXAI_PROJECT_ID="xxx"
 export MAS_AIBROKER_CHANNEL="9.0.x"
 
 # database
-export DB_HOST="mariadb-instance.mariadb.svc.cluster.local"
-export DB_PORT="3306"
-export DB_USER="mariadb"
-export DB_DATABASE="kmpipeline"
-export DB_SECRET_NAME="ds-pipeline-db-instance"
-export DB_SECRET_VALUE="mariadb"
+export MAS_AIBROKER_DB_HOST="mariadb-instance.mariadb.svc.cluster.local"
+export MAS_AIBROKER_DB_PORT="3306"
+export MAS_AIBROKER_DB_USER="mariadb"
+export MAS_AIBROKER_DB_DATABASE="kmpipeline"
+export MAS_AIBROKER_DB_SECRET_NAME="ds-pipeline-db-instance"
+export MAS_AIBROKER_DB_SECRET_VALUE="mariadb"
 ```
 
 ## Install AI broker
