@@ -245,7 +245,7 @@ To delete MAS AI Broker, the easiest way is to delete its namespace and the `aib
 
 ### MariaDB pod shows pending status
 
-The issue may be related to PVC. The storage class, `ocs-storagecluster-cephfs` is used in the `mariadb-pvc.yml` file. Change it to the storage class, e.g. "ibmc-block-gold".
+The issue may be related to PVC. The storage class, `ocs-storagecluster-cephfs` is used in the `mariadb-pvc.yml` file. Change it to the storage class, e.g. "ibmc-block-gold". Delete the mariadb namespace and re-run the bash command line.
 
 ```
 ---
