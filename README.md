@@ -118,7 +118,7 @@ ansible-playbook ibm.mas_devops.oneclick_add_aibroker
 
 You can see the screen [output](docs/masaibroker_output.txt) from the ai broker deployment. 
 
-### Delete MAS AI Broker
+### Delete AI Broker
 
 To delete MAS AI Broker, the easiest way is to delete the namespaces created.
 
@@ -150,7 +150,9 @@ Before configuring and using AI Broker, you will need the following information.
 - Copy the AI Broker url or location in the networking | routes. Add "/ibm/aibroker/service/rest/api/v1" to the url before using the service.
 - Make a note of the ai tenant id, "aibroker-user".
 
-### Replacing watsonx credentials.
+### Update watsonx credentials
+
+You can update watsonx credentials after AI broker installation. 
 
 Go to the `aibroker-user----wx-secret` secret in the AI Broker namespace. Edit the yaml file by updating the values for the three variables with prefix "wx" in the data segment with new ones. Note that the values are Base64 encoded. For example, wx_url `https://us-south.ml.cloud.ibm.com` is changed to `aHR0cHM6Ly91cy1zb3V0aC5tbC5jbG91ZC5pYm0uY29t`.
 
