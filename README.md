@@ -60,6 +60,7 @@ Depending on where you pull the container images, you will need define the follo
 
 > [!NOTE]  
 > Make sure that you use the correct MAS instance id. It should match the one for MAS Core.
+
 > Update mariadb-pvc.yml to use the correct storage class, and mariadb-np.yml to use the correct MAS instance id.
 
 ```
