@@ -129,7 +129,7 @@ To delete MAS AI Broker, the easiest way is to delete the namespaces created.
 
 Unlike other MAS app deployments, no custom resources for AI Broker deployment are created so no additional cleanup is necessary.
 
-### Re-install MAS AI Broker
+### Re-install AI Broker
 
 To re-install AI Broker, you can delete the namespaces as discussed before. 
 
