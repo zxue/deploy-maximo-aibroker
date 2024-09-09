@@ -393,6 +393,43 @@ If ds-pipeline-instance and/or ds-pipeline-persistenceagent-instance pods keep c
 
 Address any issues you find, and re-run the ai broker playbooks. 
 
+### AI Broker operator failed to be installed
+
+If AI Broker operator, which by default is installed in the AI Broker namespace, failed to be installed, uninstall it from the OpenShift console.
+
+Also, check if installed operators with the `oc` command. Remove any operator that is problematic, e.g. the operator "ibm-mas-aibroker.mas-inst1-aibroker " when the MAS instance was changed from "inst1" to "base".
+
+```
+oc get operators
+
+NAME                                                  AGE
+amq-streams.maskafka                                  257d
+authorino-operator.openshift-operators                5d1h
+db2u-operator.ibm-common-services                     244d
+ibm-cert-manager-operator.ibm-common-services         257d
+ibm-common-service-operator.ibm-common-services       257d
+ibm-data-reporter-operator.redhat-marketplace         245d
+ibm-licensing-operator-app.ibm-common-services        257d
+ibm-mas-aibroker.mas-base-aibroker                    4d2h
+ibm-mas-aibroker.mas-inst1-aibroker                   5d1h
+ibm-mas-manage.mas-base-manage                        235d
+ibm-mas-optimizer.mas-base-optimizer                  39d
+ibm-mas.mas-base-core                                 245d
+ibm-metrics-operator.redhat-marketplace               245d
+ibm-namespace-scope-operator.ibm-common-services      257d
+ibm-odlm.ibm-common-services                          257d
+ibm-sls.ibm-sls                                       257d
+ibm-truststore-mgr.ibm-sls                            257d
+ibm-truststore-mgr.mas-base-core                      245d
+ibm-truststore-mgr.mas-base-manage                    235d
+ibm-truststore-mgr.mas-base-optimizer                 39d
+opendatahub-operator.openshift-operators              5d1h
+openshift-pipelines-operator-rh.openshift-operators   5d2h
+redhat-marketplace-operator.redhat-marketplace        245d
+serverless-operator.openshift-serverless              5d2h
+servicemeshoperator.openshift-operators               5d1h
+```
+
 ### Manual certificate management issue 
 
 You may get an error like, 
@@ -415,6 +452,14 @@ data:
   tls.key: xxx
 type: kubernetes.io/tls
 ```
+
+### Storage classes, block vs. file
+
+If the default storage class is "imbc-block-gold" instead of "ocs-storagecluster-cephfs", that should work just fine. However, make sure that you update the storage class for the mariadb-pvc.yml file as discussed in the document.
+
+### Two MAS catalogs in the same OpenShift cluster
+
+This does not present an issue as long as the two catalogs are referring to the same source, e.g. "v9-240730-amd64".
 
 ## Acknowledgement
 
