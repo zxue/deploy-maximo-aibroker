@@ -59,7 +59,8 @@ Navigate to the parent folder and run the command lines below to create a MariaD
 Depending on where you pull the container images, you will need define the following environment variables. Note that dev images are used currently so use the provided ARTIFACTORY credentials. 
 
 > [!NOTE]  
-> Make sure that you use the correct instance id. It should match the one for MAS Core.
+> Make sure that you use the correct MAS instance id. It should match the one for MAS Core.
+> Update mariadb-pvc.yml to use the correct storage class, and mariadb-np.yml to use the correct MAS instance id.
 
 ```
 # ARTIFACTORY credentials
@@ -69,7 +70,7 @@ export MAS_ICR_CP="docker-na-public.artifactory.swg-devops.com/wiotp-docker-loca
 export MAS_ICR_CPOPEN="docker-na-public.artifactory.swg-devops.com/wiotp-docker-local/cpopen"
 
 #MAS
-export MAS_INSTANCE_ID="inst1"
+export MAS_INSTANCE_ID="xxx"
 export MAS_ENTITLEMENT_USERNAME="xxx"
 export MAS_ENTITLEMENT_KEY="xxx"
 
@@ -99,9 +100,15 @@ export MAS_AIBROKER_DB_SECRET_NAME="ds-pipeline-db-instance"
 export MAS_AIBROKER_DB_SECRET_VALUE="mariadb"
 ```
 
-## Install AI broker
+## Install and Configure AI broker
 
-Run the command line to install Maximo AI broker
+Ensure that MAS core has been deployed and operational before proceeding with AI Broker installation.
+
+### Install AI Broker
+
+Refer to the document [Installing and deploying the AI broker](https://www.ibm.com/docs/en/mas-cd/maximo-manage/continuous-delivery?topic=setup-installing-deploying-ai-broker). 
+
+Run the command line to install AI broker
 
 ```
 #ansible-playbook playbooks/oneclick_add_aibroker.yml
@@ -109,7 +116,64 @@ Run the command line to install Maximo AI broker
 ansible-playbook ibm.mas_devops.oneclick_add_aibroker
 ```
 
-You can see the screen [output](docs/masaibroker_output.txt) from the ai broker deloyment. 
+You can see the screen [output](docs/masaibroker_output.txt) from the ai broker deployment. 
+
+### Delete MAS AI Broker
+
+To delete MAS AI Broker, the easiest way is to delete the namespaces created.
+
+- The aibroker namespace, e.g. mas-inst1-aibroker
+- The `aibroker-user` namespace if it exists.
+- Optionally, the minio namespace
+- Optionally, the mariadb namespace
+
+Unlike other MAS app deployments, no custom resources for AI Broker deployment are created so no additional cleanup is necessary.
+
+### Re-install MAS AI Broker
+
+To re-install AI Broker, you can delete the namespaces as discussed before. 
+
+Also, check the installed operators. While not required, you can uninstall them, especially the Open Data Hub operator and all associated operands.
+
+- Authorino operator in openshift-operators namespace
+- Open Data Hub operator in openshift-operators namespace
+- Serverless operator in openshift-serverless namespace
+- ServiceMesh operator in openshift-serverless namespace
+
+Run the playbooks again to install AI Broker.
+
+### Get AI Broker API Key
+
+Before configuring and using AI Broker, you will need the following information. From the OpenShift console, select the AI Broker project/namespace.
+
+- Copy the AI Broker api key in the "aibroker----user-apikey-secret".
+- Copy the AI Broker url or location in the networking | routes. Add "/ibm/aibroker/service/rest/api/v1" to the url before using the service.
+- Make a note of the ai tenant id, "aibroker-user".
+
+### Replacing watsonx credentials.
+
+Go to the `aibroker-user----wx-secret` secret in the AI Broker namespace. Edit the yaml file by updating the values for the three variables with prefix "wx" in the data segment with new ones. Note that the values are Base64 encoded. For example, wx_url `https://us-south.ml.cloud.ibm.com` is changed to `aHR0cHM6Ly91cy1zb3V0aC5tbC5jbG91ZC5pYm0uY29t`.
+
+```
+kind: Secret
+apiVersion: v1
+metadata:
+  name: aibroker-user----wx-secret
+  namespace: mas-inst1-aibroker
+  uid: b9e6e255-9a76-4cec-ae01-e13b4e01acc9
+  resourceVersion: '3988003'
+  creationTimestamp: '2024-08-23T19:04:16Z'
+data:
+  wx_apikey: S3Btb......lMTFhzTy14Njg=
+  wx_project_id: YmViOT......jZkZGU2MDZl
+  wx_url: aHR0cHM6L......bG91ZC5pYm0uY29t
+type: Opaque
+```
+
+
+### Configure Maximo Manage for AI broker
+
+Follow the documentation on "[Configure Maximo Manage for AI broker]"(https://www.ibm.com/docs/en/mas-cd/maximo-manage/continuous-delivery?topic=setup-configure-maximo-manage-ai-broker).
 
 ## Testing AI broker
 
@@ -239,10 +303,6 @@ connection: close
   ]
 }
 ```
-
-## Delete MAS AI Broker
-
-To delete MAS AI Broker, the easiest way is to delete its namespace and the `aibroker-user` namespace. You may also delete the Minio storage and MariaDB database. Unlike other MAS app deployment, no custom resources for AI Broker deployment are created so no additional cleanup is necessary.
 
 ## Troubleshoot issues
 
