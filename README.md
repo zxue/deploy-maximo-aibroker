@@ -382,7 +382,7 @@ fatal: [localhost]: FAILED! => changed=false
   status: 500
 ```
 
-### Pods with "CrashLoopBackOff" errors
+### Data Science cluster Pods with "CrashLoopBackOff" errors
 
 If ds-pipeline-instance and/or ds-pipeline-persistenceagent-instance pods keep crashing with "CrashLoopBackOff" errors, check the following.
 
@@ -452,6 +452,10 @@ data:
   tls.key: xxx
 type: kubernetes.io/tls
 ```
+
+### AI Broke API Pod with "CrashLoopBackOff" errors
+
+Ensure that the user name and IBM entitlement key are valid. Update them from the OpenShift admin console, and then delete the API pod.
 
 ### Storage classes, block vs. file
 
