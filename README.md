@@ -127,7 +127,10 @@ To delete MAS AI Broker, the easiest way is to delete the namespaces created.
 - Optionally, the minio namespace
 - Optionally, the mariadb namespace
 
-Unlike other MAS app deployments, no custom resources for AI Broker deployment are created so no additional cleanup is necessary.
+Also, check custom resources and search on "datascience". Delete instances in each CR.
+
+- DataScienceCluster
+- DataSciencePipelinesApplication
 
 ### Re-install AI Broker
 
