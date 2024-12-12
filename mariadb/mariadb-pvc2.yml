@@ -1,17 +1,25 @@
----
-apiVersion: v1
-kind: PersistentVolumeClaim
+kind: Template
+apiVersion: template.openshift.io/v1
 metadata:
-  name: mariadb-pvc
+  name: pvc-template
   namespace: mariadb
-  labels:
-    app: mariadb-instance
-    component: data-science-pipelines
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: "${MAS_AIBROKER_STORAGE_CLASS}"
-  resources:
-    requests:
-      storage: 20Gi
+parameters:
+  - name: MAS_AIBROKER_STORAGE_CLASS
+objects:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata: 
+      name: mariadb-pvc
+      namespace: mariadb
+    labels:
+      app: mariadb-instance
+      component: data-science-pipelines
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: "${MAS_AIBROKER_STORAGE_CLASS}"
+      resources:
+        requests:
+          storage: 20Gi
+      volumeMode: Filesystem
 
