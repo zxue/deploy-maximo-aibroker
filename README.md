@@ -243,6 +243,8 @@ curl -X DELETE "https://aibroker.xxx.com/ibm/aibroker/service/rest/api/v1/model/
 
 If the curl command lines failed due to SSL certificate problem, add -k or --insecure to allow insecure server connections. 
 
+### Test using Postman
+
 You can import to Postman and run there.
 
 ![Run curl in Postman](media/run-curl-in-postman.png)
@@ -269,6 +271,7 @@ In VS Code with Rest Client extension, create a file named [aibroker test.http](
 POST {{aibrokerurl}}
 apikey: {{apikey}}
 tenantid: {{tenantid}}
+modelid: {{modelid}}
 Content-Type: application/json
 
 {
