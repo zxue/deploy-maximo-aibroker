@@ -246,6 +246,9 @@ If the curl command lines failed due to SSL certificate problem, add -k or --ins
 
 You can import to Postman and run there.
 
+- post the zip file
+- post the text in json
+
 ![Run curl in Postman](media/aibroker-postman-modelid.png)
 
 ### Test inference using VS Code
