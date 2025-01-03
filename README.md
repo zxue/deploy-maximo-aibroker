@@ -231,13 +231,13 @@ curl --location --request POST "https://aibroker.inst1.apps.xxx.com"
 Delete the model and the pod. Note you can also run the command line inside the api pod in the AI Broker namespace, e.g. "mas-inst1-airbroker".
 
 ```
-curl -X DELETE "https://aibroker.xxx.com/ibm/aibroker/service/rest/api/v1/model/m05657d20" \ 
+curl -X DELETE "https://aibroker.xxx.com/ibm/aibroker/service/rest/api/v1/model/m60cec6d0" \ 
 --insecure \ 
 --header 'apikey: xxx' \ 
 --header 'tenantid: aibroker-user' \
 --header 'modelid;' 
 
-{"message":"Model m05657d20 deleted successfully."}
+{"message":"Model m60cec6d0 deleted successfully."}
 ```
 
 If the curl command lines failed due to SSL certificate problem, add -k or --insecure to allow insecure server connections. 
@@ -246,8 +246,8 @@ If the curl command lines failed due to SSL certificate problem, add -k or --ins
 
 You can import to Postman and run there.
 
-- post the zip file
-- post the text in json
+- post the zip file and get response, `"dataid": "working.zip"`
+- post the text in json and get the model id, `"modelid": "m60cec6d0"`
 
 ![Run curl in Postman](media/aibroker-postman-modelid.png)
 
