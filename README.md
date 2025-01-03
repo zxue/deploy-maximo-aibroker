@@ -198,8 +198,7 @@ Send over the working.zip file
 ```
 curl --location --request POST 'https://aibroker.inst1.apps.xxx.com/ibm/aibroker/service/rest/api/v1/uploadfile?filename=working.zip' \
 --header 'apikey: xxx' \
---header 'tenantid: aibroker-user' \
---header 'modelid;' \
+--header 'tenantid: aibroker-user' 
 --header 'Content-Type: application/zip' \
 --header 'Cookie: 4c47ff0e86b47bc367679e589d646347=76943252df0d580a4cd4a8651a70c823; JSESSIONID=0000q8h9d2eUFqD7xWt1gR8eheF:860d418d-de7d-43b4-83c4-69a3e605bc61' \
 --data-binary '@/Users/xxx/Downloads/working.zip'
@@ -247,15 +246,7 @@ If the curl command lines failed due to SSL certificate problem, add -k or --ins
 
 You can import to Postman and run there.
 
-![Run curl in Postman](media/run-curl-in-postman.png)
-
-If no errors occurred, you can check the pipeline runs in OpenShift.
-
-![AI broker pipelineruns](media/aibroker-pipelineruns.png)
-
-You can open the url from Serverless | serving in the aibroker-user namespace, and see the msg, `{"status":"alive"}`.
-
-![AI broker user serving](media/aibroker-user-serving.png)
+![Run curl in Postman](media/aibroker-postman-modelid.png)
 
 ### Test inference using VS Code
 
@@ -324,6 +315,16 @@ connection: close
   ]
 }
 ```
+
+### Check pipeline runs and model run status
+
+If no errors occurred, you can check the pipeline runs in OpenShift.
+
+![AI broker pipelineruns](media/aibroker-pipelineruns.png)
+
+You can open the url from Serverless | serving in the aibroker-user namespace, and see the msg, `{"status":"alive"}`.
+
+![AI broker user serving](media/aibroker-user-serving.png)
 
 ## Troubleshoot issues
 
