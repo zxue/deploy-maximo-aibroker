@@ -518,7 +518,7 @@ type: kubernetes.io/tls
 
 ### AI Broker API Pod with "CrashLoopBackOff" errors
 
-Ensure that the user name and IBM entitlement key are valid. Update them from the OpenShift admin console, in the secret like "ibm-entitlement", and then delete the API pod.
+Ensure that the user name and IBM entitlement keys are valid. If they are changed or expired, update the "ibm-entitlement" in the AI Broker namespace and the aibroker-user namespace from the OpenShift admin console, and delete the API pod.
 
 If the AI Broker predict pod keeps crashing, you can delete the pod by deleleting the model. See the model deletion command line mentioned in the doc. 
 
