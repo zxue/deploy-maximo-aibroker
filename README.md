@@ -240,6 +240,15 @@ curl -X DELETE "https://aibroker.xxx.com/ibm/aibroker/service/rest/api/v1/model/
 {"message":"Model m60cec6d0 deleted successfully."}
 ```
 
+List all models in use
+
+```
+curl --location --request GET 'https://aibroker.xxx.com/ibm/aibroker/service/rest/api/v1/models' \
+--header 'apikey: xxx' \
+--header 'tenantid: aibroker-user' \
+--data-raw ''
+```
+
 If the curl command lines failed due to SSL certificate problem, add -k or --insecure to allow insecure server connections. 
 
 ### Test using Postman
@@ -328,6 +337,37 @@ If no errors occurred, you can check the pipeline runs in OpenShift.
 You can open the url from Serverless | serving in the aibroker-user namespace, and see the msg, `{"status":"alive"}`.
 
 ![AI broker user serving](media/aibroker-user-serving.png)
+
+### Use the API from OpenShift
+
+If you have admin access to the OpenShift cluster, you can access the AI Broker's KModels API.
+
+First, create a new route. Complete the form on the screen with the following values:
+- Name: kmcontroller, or any other name.
+- Service: km-controller
+- Target port: 8443 -> https (TCP)
+- Security: Secure route
+- TLS termination: passthrough
+- Insecure traffic: Redirect
+
+Then, navigate to the location or the new route URL, e.g. https://kmcontroller-xxx.vcom, add `/api-docs/` to the url. 
+
+Find the Models section. Specify "aibroker-user" as value of Tenant id and click on the Execute button. You should see a response body with all models listed.
+
+```
+[
+  {
+    "id": "mf8e657b0",
+    "tenant": "aibroker-user"
+  },
+    {
+    "id": "m4fbddca0",
+    "tenant": "aibroker-user"
+  }
+]
+```
+
+Similarly, you can delete AI Broker models by using the Delete API endpoint. Go back to the top and find the Model section. Expand the DELETE option, and specify the value in the model id field. Click on Execute and check the response body. The specified model should be deleted.
 
 ## Troubleshoot issues
 
