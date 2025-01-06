@@ -360,7 +360,7 @@ Find the Models section. Specify "aibroker-user" as value of Tenant id and click
     "id": "mf8e657b0",
     "tenant": "aibroker-user"
   },
-    {
+  {
     "id": "m4fbddca0",
     "tenant": "aibroker-user"
   }
