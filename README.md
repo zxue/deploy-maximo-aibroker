@@ -350,7 +350,7 @@ First, create a new route. Complete the form on the screen with the following va
 - TLS termination: passthrough
 - Insecure traffic: Redirect
 
-Then, navigate to the location or the new route URL, e.g. https://kmcontroller-xxx.vcom, add `/api-docs/` to the url. 
+Then, navigate to the location or the new route URL, e.g. https://kmcontroller-xxx.com, add `/api-docs/` to the url. 
 
 Find the Models section. Specify "aibroker-user" as value of Tenant id and click on the Execute button. You should see a response body with all models listed.
 
