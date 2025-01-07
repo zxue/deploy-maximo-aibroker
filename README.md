@@ -264,6 +264,9 @@ You can import to Postman and run there.
 
 In VS Code with Rest Client extension, create a file named [aibroker test.http](docs/aibroker%20test.http). Replace the variables with values you find previously, including the model id from the second curl command line. Note: You can do similar test in Postman.
 
+> [!Note]
+> The API endpoint includes "/infer/predict" at the end.
+
 ```
 ### REST Client
 @aibrokerurl =https://aibroker.inst1.apps.xxx.com/ibm/aibroker/service/rest/api/v1/model/{{modelid}}/infer/predict
