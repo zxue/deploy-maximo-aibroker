@@ -525,6 +525,25 @@ Ensure that the user name and IBM entitlement keys are valid. If they are change
 
 If the AI Broker predict pod keeps crashing, you can delete the pod by deleleting the model. See the model deletion command line mentioned in the doc. 
 
+
+### Issue related to expired certificate and deleted model
+
+If the broker health status shows an error on the AI Configuration screen, one possibility is that the model has been deleted or the certificate has expired.
+
+```
+BMXAA1477E - The connection to the target server endpoint failed. Either the server is down or the server address is not reachable or transport layer error happened. PKIX path validation failed: java.security.cert.CertPathValidatorException: validity check failed
+```
+
+To fix the issue, go to the Manage console, add a new property to System Properties or modify the existing one. Set the current value to 1. Note: This workaround is only intended for non-prod scenarios.
+
+![MAS Manage Add Property](media/mas-manage-cert-property.png)
+
+Go back to the AI Configuration screen, click on Broker health to refresh the status. If the status shows running, open the WOPROBLEMCODE (or something similar) entry, select Train the model from Actions. Confirm the prompt and continue.
+
+```
+Training the model will delete the existing model and create a new model. Do you want to continue?
+```
+
 ### Storage classes, block vs. file
 
 If the default storage class is "imbc-block-gold" instead of "ocs-storagecluster-cephfs", that should work just fine. However, make sure that you update the storage class for the mariadb-pvc.yml file as discussed in the document.
