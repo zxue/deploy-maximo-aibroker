@@ -544,6 +544,8 @@ Go back to the AI Configuration screen, click on Broker health to refresh the st
 Training the model will delete the existing model and create a new model. Do you want to continue?
 ```
 
+For production scenarios, re-import the certificate. See [Configuring Maximo Manage for AI broker](https://www.ibm.com/docs/en/masv-and-l/maximo-manage/continuous-delivery?topic=setup-configuring-maximo-manage-ai-broker).
+
 ### Storage classes, block vs. file
 
 If the default storage class is "imbc-block-gold" instead of "ocs-storagecluster-cephfs", that should work just fine. However, make sure that you update the storage class for the mariadb-pvc.yml file as discussed in the document.
