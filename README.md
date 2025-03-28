@@ -500,9 +500,18 @@ If ds-pipeline-instance and/or ds-pipeline-persistenceagent-instance pods keep c
 
 Address any issues you find, and re-run the ai broker playbooks. 
 
-### AI Broker operator failed to be installed
+### AI Broker operators failed to be installed
 
-If AI Broker operator, which by default is installed in the AI Broker namespace, failed to be installed, uninstall it from the OpenShift console.
+If AI Broker operators, which by default are installed in different namespaces, failed to be installed, uninstall them from the OpenShift console.
+
+- authorino in namesapce "openshift-operators"
+- openshift serverless in namesapce "openshift-serverless"
+- openshift open data hub in namesapce "openshift-operators"
+- openshift service mesh in namesapce "openshift-operators"
+
+In some cases, you may install the openshift serverless operator manually, remove all other operators listed above and re-run the playbooks. 
+
+You may have to approve some install plans manually to keep the deployment going. Make sure that only the supported versions are installed, e.g. verison 2.11.1 for the ODH operator. If you approve an install plan by mistake, for example, the install plan upgraded the ODH operator to a higher version, you can delete the ODH operator and re-install it with the correct version. 
 
 Also, check if installed operators with the `oc` command. Remove any operator that is problematic, e.g. the operator "ibm-mas-aibroker.mas-inst1-aibroker " when the MAS instance was changed from "inst1" to "base".
 
@@ -535,6 +544,40 @@ openshift-pipelines-operator-rh.openshift-operators   5d2h
 redhat-marketplace-operator.redhat-marketplace        245d
 serverless-operator.openshift-serverless              5d2h
 servicemeshoperator.openshift-operators               5d1h
+```
+
+### OpenShift serverless operator error
+
+If you encounter an error with the serverless operator due to the error below.
+
+```
+    - lastTransitionTime: '2025-03-27T17:07:41Z'
+      lastUpdateTime: '2025-03-27T17:07:41Z'
+      message: install strategy completed with no errors
+      phase: Succeeded
+      reason: InstallSucceeded
+    - lastTransitionTime: '2025-03-27T17:58:11Z'
+      lastUpdateTime: '2025-03-27T17:58:11Z'
+      message: 'csv created in namespace with multiple operatorgroups, can''t pick one automatically'
+      phase: Failed
+      reason: TooManyOperatorGroups
+
+```
+
+You can check the operator groups and delete one if necessary. More info at [Manual installation of Operator into single namespace fails](https://swc.saas.ibm.com/en-us/redhat-marketplace/documentation/deployment-troubleshooting)
+
+```
+oc get operatorgroup -n openshift-serverless
+NAME                         AGE
+openshift-serverless-f69dr   80m
+operatorgroup                28m
+
+oc delete operatorgroup openshift-serverless-f69dr -n openshift-serverless
+operatorgroup.operators.coreos.com "openshift-serverless-f69dr" deleted
+
+oc get operatorgroup -n openshift-operators 
+NAME               AGE
+global-operators   3h23m
 ```
 
 ### Manual certificate management issue 
