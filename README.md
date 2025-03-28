@@ -2,7 +2,9 @@
 
 Maximo Application Suite (MAS) version 9.0 introduces a new feature, AI Broker. It is the integration hub that facilitates communication between MAS and IBM watsonx AI systems or services. For more details, check [Maximo Manage AI overview](https://www.ibm.com/docs/en/mas-cd/maximo-manage/continuous-delivery?topic=watsonx-maximo-manage-ai-overview).
 
-You can install after Mas Core or Mas Manage is deployed. This document outlines steps for deploying Maximo AI broker and some troubleshooting tips.
+You can install AI Broker after Mas Core or Mas Manage is deployed. This document outlines steps for deploying Maximo AI broker using Ansible Playbooks and some troubleshooting tips. 
+
+Alternatively, you can install AI Broker and other MAS apps with the cli command line, "mas install" in an ibmmas/cli container.
 
 Check [Installing and deploying the AI broker](https://www.ibm.com/docs/en/mas-cd/maximo-manage/continuous-delivery?topic=setup-installing-deploying-ai-broker)
 
@@ -17,8 +19,16 @@ You can use your local environment with python3 and other dependencies, or use t
 Check that you have `oneclick_add_aibroker.yml` available in the folder, e.g. `/Users/xxx/masconfig/ansible-devops/ibm/mas_devops/playbooks`
 
 ```
+mkdir masconfig
 cd masconfig
-docker run -it --rm --pull always -v ${PWD}:/masconfig --name ibmmas quay.io/ibmmas/cli
+
+
+podman machine init
+podman machine start
+#podman machine stop
+
+cd masconfig
+podman run -it --rm --pull always -v ${PWD}:/masconfig --name ibmmas quay.io/ibmmas/cli
 ```
 
 Clone the repo because you will need several files for the deployment.
@@ -30,6 +40,10 @@ While you may be able to use IBM Cloud Object Storage and other S3 compatible st
 Ensure that you have downloaded the three yaml files, `kustomization.yml`,`minio.yml`,`pvc.yml`, and save them to the minio folder. Navigate to the parent folder and run the command lines below to create the Minio storage in its own namespace, `minio`, which is created automatically. 
 
 ```
+#run the command lines locally
+
+oc login --token=sha256~xxx --server=https://api.xxx.ocp.techzone.ibm.com:6443
+
 #oc new-project minio
 #cd ..
 oc apply -k minio
@@ -47,10 +61,14 @@ Open the mariadb network policy file, mariadb-np.yml, and update two values with
 
 Navigate to the parent folder and run the command lines below to create a MariaDB database in its own namespace, `mariadb`, which is created automatically.
 
-
 ```
+#run the command lines locally
+
+#oc login --token=sha256~xxx --server=https://api.xxx.ocp.techzone.ibm.com:6443
+
 # oc new-project mas-inst1-aibroker
 #cd ..
+
 ./mariadb/mariadb-deploy.sh
 ```
 
@@ -63,16 +81,23 @@ Depending on where you pull the container images, you will need define the follo
 > - Update mariadb-pvc.yml to use the correct storage class, and mariadb-np.yml to use the correct MAS instance id.
 
 ```
-# ARTIFACTORY credentials
-export ARTIFACTORY_USERNAME="xxx"
-export ARTIFACTORY_TOKEN="xxx"
-export MAS_ICR_CP="docker-na-public.artifactory.swg-devops.com/wiotp-docker-local"
-export MAS_ICR_CPOPEN="docker-na-public.artifactory.swg-devops.com/wiotp-docker-local/cpopen"
+#run the command lines in the ibmmas/cli container
+
+oc login --token=sha256~xxx --server=https://api.xxx.ocp.techzone.ibm.com:6443
+
+# ARTIFACTORY credentials if dev images are to be used
+#export ARTIFACTORY_USERNAME="xxx"
+#export ARTIFACTORY_TOKEN="xxx"
+#export MAS_ICR_CP="docker-na-public.artifactory.swg-devops.com/wiotp-docker-local"
+#export MAS_ICR_CPOPEN="docker-na-public.artifactory.swg-devops.com/wiotp-docker-local/cpopen"
 
 #MAS
 export MAS_INSTANCE_ID="xxx"
 export MAS_ENTITLEMENT_USERNAME="xxx"
 export MAS_ENTITLEMENT_KEY="xxx"
+
+# Operators with specific versions
+export ODH_OPERATOR_VERSION="opendatahub-operator.v2.11.1"
 
 # MINIO
 export MAS_AIBROKER_STORAGE_ACCESSKEY="minio123"
@@ -98,6 +123,22 @@ export MAS_AIBROKER_DB_USER="mariadb"
 export MAS_AIBROKER_DB_DATABASE="kmpipeline"
 export MAS_AIBROKER_DB_SECRET_NAME="ds-pipeline-db-instance"
 export MAS_AIBROKER_DB_SECRET_VALUE="mariadb"
+
+ansible-playbook ibm.mas_devops.oneclick_add_aibroker
+```
+
+Alternatively, you can install MAS apps including AI Broker by running the command lines below.
+
+```
+#run the command lines in the ibmmas/cli container
+
+oc login --token=sha256~xxx --server=https://api.xxx.ocp.techzone.ibm.com:6443
+mas install
+
+# Respond to the prompts, e,g, yes/no, and provide values e.g. mas license key file location and 
+# IBM entitlement key, and catalog version. 
+# Upon final confirmation to proceed with the selected settings, 
+# the tool creates pipelines in the OpenShift cluster and execute them. 
 ```
 
 ## Install and Configure AI broker
