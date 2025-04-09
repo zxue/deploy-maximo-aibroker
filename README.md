@@ -93,7 +93,7 @@ oc login --token=sha256~xxx --server=https://api.xxx.ocp.techzone.ibm.com:6443
 
 #MAS
 export MAS_INSTANCE_ID="xxx"
-export MAS_ENTITLEMENT_USERNAME="xxx"
+export MAS_ENTITLEMENT_USERNAME="cp"
 export MAS_ENTITLEMENT_KEY="xxx"
 
 # Operators with specific versions
@@ -609,6 +609,21 @@ Ensure that the user name and IBM entitlement keys are valid. If they are change
 
 If the AI Broker predict pod keeps crashing, you can delete the pod by deleleting the model. See the model deletion command line mentioned in the doc. 
 
+### Model is not ready and pipeline run failed due to invalid credentials
+
+If the model id is available but the model is not available after a while, check the pipeline in the ai broker namespace. If the pipeline run failed due to errors lile below, check the "ibm-entitlement" secret.
+
+```
+1 error occurred: * failed to create task run pod "m03c2e6b0-pipeline-e5345-maximo-work-order-pcc-skill": translating TaskSpec to Pod: GET https://cp.icr.io/oauth/token?scope=repository%3Acp%2Faibroker%2Fpre%3Apull&service=registry: UNSUPPORTED: The requested authentication method is not supported. Try again using appropriate login credentials for the resource you are attempting to access.; The requested authentication method is not supported. Try again using appropriate login credentials for the resource you are attempting to access.. Maybe invalid TaskSpec
+```
+
+If necessary, replace the credentials by editing the "ibm-entitlement" secret with the following:
+```
+user name: cp
+passworkd: <your ibm entitlement key>
+```
+
+Make sure that you replace the secret in both namespaces, e.g. mas-inst1-aibroker and aibroker-user.
 
 ### Issue related to expired certificate and deleted model
 
