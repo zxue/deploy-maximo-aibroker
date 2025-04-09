@@ -620,7 +620,7 @@ If the model id is available but the model is not available after a while, check
 If necessary, replace the credentials by editing the "ibm-entitlement" secret with the following:
 ```
 user name: cp
-passworkd: <your ibm entitlement key>
+password: <your ibm entitlement key>
 ```
 
 Make sure that you replace the secret in both namespaces, e.g. mas-inst1-aibroker and aibroker-user.
