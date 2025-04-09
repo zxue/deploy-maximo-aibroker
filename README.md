@@ -614,7 +614,11 @@ If the AI Broker predict pod keeps crashing, you can delete the pod by deleletin
 If the model id is available but the model is not available after a while, check the pipeline in the ai broker namespace. If the pipeline run failed due to errors lile below, check the "ibm-entitlement" secret.
 
 ```
-1 error occurred: * failed to create task run pod "m03c2e6b0-pipeline-e5345-maximo-work-order-pcc-skill": translating TaskSpec to Pod: GET https://cp.icr.io/oauth/token?scope=repository%3Acp%2Faibroker%2Fpre%3Apull&service=registry: UNSUPPORTED: The requested authentication method is not supported. Try again using appropriate login credentials for the resource you are attempting to access.; The requested authentication method is not supported. Try again using appropriate login credentials for the resource you are attempting to access.. Maybe invalid TaskSpec
+1 error occurred: * failed to create task run pod "m03c2e6b0-pipeline-e5345-maximo-work-order-pcc-skill": 
+translating TaskSpec to Pod: GET https://cp.icr.io/oauth/token?scope=repository%3Acp%2Faibroker%2Fpre%3Apull&service=registry: UNSUPPORTED: 
+The requested authentication method is not supported. Try again using appropriate login credentials for the resource you are attempting to access.; 
+The requested authentication method is not supported. Try again using appropriate login credentials for the resource you are attempting to access.. 
+Maybe invalid TaskSpec
 ```
 
 If necessary, replace the credentials by editing the "ibm-entitlement" secret with the following:
