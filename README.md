@@ -374,7 +374,7 @@ connection: close
 
 ### Check pipeline runs and model run status
 
-If no errors occurred, you can check the pipeline runs in OpenShift.
+You can check the pipeline runs in OpenShift after the model has been created and is being (or has been) trained. Fix any errors if the pipeline run failed.
 
 ![AI broker pipelineruns](media/aibroker-pipelineruns.png)
 
