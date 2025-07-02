@@ -98,7 +98,7 @@ export MAS_ENTITLEMENT_KEY="xxx"
 
 # Operators with specific versions
 export ODH_OPERATOR_VERSION="opendatahub-operator.v2.11.1"
-# For MAS 9.x
+# For MAS 9.1.x
 export ODH_OPERATOR_VERSION="opendatahub-operator.v2.19.0"
 
 # MINIO
